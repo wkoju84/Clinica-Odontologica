@@ -1,30 +1,31 @@
-package br.com.dh.clinica.entities;
+package br.com.dh.clinica.dtos;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.com.dh.clinica.entities.Dentista;
 
-@Entity
-public class Dentista {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DentistaDto {
     private Integer id;
     private String nome;
     private String email;
     private Integer cro;
     private boolean atendeConvenio;
 
-    public Dentista() {
+    public DentistaDto() {
     }
 
-    public Dentista(Integer id, String nome, String email, Integer cro, boolean atendeConvenio) {
+    public DentistaDto(Integer id, String nome, String email, Integer cro, boolean atendeConvenio) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cro = cro;
         this.atendeConvenio = atendeConvenio;
+    }
+
+    public DentistaDto(Dentista dentista) {
+        this.id = dentista.getId();
+        this.nome = dentista.getNome();
+        this.email = dentista.getEmail();
+        this.cro = dentista.getCro();
+        this.atendeConvenio = dentista.isAtendeConvenio();
     }
 
     public Integer getId() {
