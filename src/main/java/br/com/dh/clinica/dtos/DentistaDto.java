@@ -2,7 +2,13 @@ package br.com.dh.clinica.dtos;
 
 import br.com.dh.clinica.entities.Dentista;
 
-public class DentistaDto {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class DentistaDto implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String nome;
     private String email;
