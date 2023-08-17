@@ -1,3 +1,1 @@
-
-INSERT INTO dentista (nome, email, cro, atendeconvenio) VALUES ('Eudo Magalhães', 'e.mag@gmail.com', 34233, FALSE);
-
+INSERT INTO dentista (nome, email, cro, atendeconvenio) VALUES ("Pablo Alves", "p.alves@hotmail.com", 34224, TRUE);
