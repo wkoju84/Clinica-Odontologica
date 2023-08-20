@@ -42,4 +42,11 @@ public class DentistaController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<DentistaDto> atualizaDentista(@PathVariable Integer id,
+                                                        @RequestBody DentistaDto dto){
+        dto = dentistaService.atualizar(id,dto);
+        return ResponseEntity.ok().body(dto);
+    }
+
 }
