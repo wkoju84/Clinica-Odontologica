@@ -1,23 +1,18 @@
-package br.com.dh.clinica.entities;
+package br.com.dh.clinica.dtos;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.com.dh.clinica.entities.Endereco;
+
 import java.io.Serial;
 import java.io.Serializable;
 
-@Entity
-public class Endereco implements Serializable {
+public class EnderecoDto implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String rua;
+
     private String numero;
     private String bairro;
     private String cidade;
@@ -25,17 +20,27 @@ public class Endereco implements Serializable {
     private String cep;
     private String estado;
 
-    public Endereco() {
+    public EnderecoDto() {
     }
 
-    public Endereco(Integer id, String rua, String numero, String bairro, String cidade, String cep, String estado) {
+    public EnderecoDto(Integer id, String rua, String numero, String bairro, String cidade, String cep,String estado) {
         this.id = id;
         this.rua = rua;
         this.numero = numero;
         this.bairro = bairro;
         this.cidade = cidade;
-        this.cep = cep;
+        this.cep = cidade;
         this.estado = estado;
+    }
+
+    public EnderecoDto(Endereco endereco) {
+        this.id = endereco.getId();
+        this.rua = endereco.getRua();
+        this.numero = endereco.getNumero();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.cep = endereco.getCep();
+        this.estado = endereco.getEstado();
     }
 
     public Integer getId() {
