@@ -17,3 +17,7 @@ INSERT INTO endereco (rua, numero, bairro, cidade, cep, estado) VALUES ('Servid√
 --INSERT INTO paciente_endereco (paciente_id, endereco_id) VALUES (2, 3);
 --INSERT INTO paciente_endereco (paciente_id, endereco_id) VALUES (3, 2);
 --INSERT INTO paciente_endereco (paciente_id, endereco_id) VALUES (3, 3);
+
+INSERT INTO usuario (nome, email, senha, nivel_acesso) VALUES ('Jaspion Giban', 'jaspion-giban@expo.com', '215487', 1);
+INSERT INTO usuario (nome, email, senha, nivel_acesso) VALUES ('Vegeta', 'vegeta.prince@expo.com', '412587', 2);
+INSERT INTO usuario (nome, email, senha, nivel_acesso) VALUES ('Kakaroto', 'kakaroto@expo.com', '325698', 3);
