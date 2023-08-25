@@ -34,13 +34,13 @@ public class EnderecoDto implements Serializable {
     }
 
     public EnderecoDto(Endereco endereco) {
-        this.id = endereco.getId();
-        this.rua = endereco.getRua();
-        this.numero = endereco.getNumero();
-        this.bairro = endereco.getBairro();
-        this.cidade = endereco.getCidade();
-        this.cep = endereco.getCep();
-        this.estado = endereco.getEstado();
+        id = endereco.getId();
+        rua = endereco.getRua();
+        numero = endereco.getNumero();
+        bairro = endereco.getBairro();
+        cidade = endereco.getCidade();
+        cep = endereco.getCep();
+        estado = endereco.getEstado();
     }
 
     public Integer getId() {

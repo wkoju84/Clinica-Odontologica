@@ -37,12 +37,7 @@ public class EnderecoService {
     @Transactional
     public EnderecoDto inserir(EnderecoDto dto){
         Endereco entidade = new Endereco();
-        entidade.setRua(dto.getRua());
-        entidade.setNumero(dto.getNumero());
-        entidade.setBairro(dto.getBairro());
-        entidade.setCidade(dto.getCidade());
-        entidade.setCep(dto.getCep());
-        entidade.setEstado(dto.getEstado());
+        copiarDtoParaEntidade(dto, entidade);
         entidade = enderecoRepository.save(entidade);
         return new EnderecoDto(entidade);
     }
@@ -50,13 +45,17 @@ public class EnderecoService {
     @Transactional
     public EnderecoDto atualizar(Integer id, EnderecoDto dto) {
         Endereco entidade = enderecoRepository.getReferenceById(id);
+        copiarDtoParaEntidade(dto, entidade);
+        entidade = enderecoRepository.save(entidade);
+        return new EnderecoDto(entidade);
+    }
+
+    private void copiarDtoParaEntidade(EnderecoDto dto, Endereco entidade){
         entidade.setRua(dto.getRua());
         entidade.setNumero(dto.getNumero());
         entidade.setBairro(dto.getBairro());
         entidade.setCidade(dto.getCidade());
         entidade.setCep(dto.getCep());
         entidade.setEstado(dto.getEstado());
-        entidade = enderecoRepository.save(entidade);
-        return new EnderecoDto(entidade);
     }
 }

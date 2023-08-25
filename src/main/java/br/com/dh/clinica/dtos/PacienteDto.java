@@ -1,21 +1,19 @@
-package br.com.dh.clinica.entities;
+package br.com.dh.clinica.dtos;
 
-import javax.persistence.*;
+import br.com.dh.clinica.entities.Endereco;
+import br.com.dh.clinica.entities.Paciente;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table
-public class Paciente implements Serializable {
+public class PacienteDto implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nome;
@@ -24,21 +22,26 @@ public class Paciente implements Serializable {
 
     private LocalDate dataCadastro;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "paciente_endereco",
-        joinColumns = @JoinColumn(name = "paciente_id"),
-        inverseJoinColumns = @JoinColumn(name = "endereco_id"))
-    private Set<Endereco> enderecos = new HashSet<>();
+    private Set<EnderecoDto> enderecos = new HashSet<>();
 
-    public Paciente() {
+    public PacienteDto() {
     }
 
-    public Paciente(Integer id, String nome, String email, String cpf, LocalDate dataCadastro) {
+    public PacienteDto(Integer id, String nome, String email, String cpf, LocalDate dataCadastro) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.dataCadastro = dataCadastro;
+    }
+
+    public PacienteDto(Paciente paciente) {
+        id = paciente.getId();
+        nome = paciente.getNome();
+        email = paciente.getEmail();
+        cpf = paciente.getCpf();
+        dataCadastro = paciente.getDataCadastro();
+        paciente.getEnderecos().forEach(end -> this.enderecos.add(new EnderecoDto(end)));
     }
 
     public Integer getId() {
@@ -81,7 +84,7 @@ public class Paciente implements Serializable {
         this.dataCadastro = dataCadastro;
     }
 
-    public Set<Endereco> getEnderecos() {
+    public Set<EnderecoDto> getEnderecos() {
         return enderecos;
     }
 }
