@@ -37,10 +37,7 @@ public class DentistaService {
     @Transactional
     public DentistaDto inserir(DentistaDto dto){
         Dentista entidade = new Dentista();
-        entidade.setNome(dto.getNome());
-        entidade.setEmail(dto.getEmail());
-        entidade.setCro(dto.getCro());
-        entidade.setAtendeConvenio(dto.isAtendeConvenio());
+        copiarDtoParaEntidade(dto, entidade);
         entidade = dentistaRepository.save(entidade);
         return new DentistaDto(entidade);
     }
@@ -48,11 +45,15 @@ public class DentistaService {
     @Transactional
     public DentistaDto atualizar(Integer id, DentistaDto dto){
         Dentista entidade = dentistaRepository.getReferenceById(id);
+        copiarDtoParaEntidade(dto, entidade);
+        entidade = dentistaRepository.save(entidade);
+        return new DentistaDto(entidade);
+    }
+
+    private void copiarDtoParaEntidade(DentistaDto dto, Dentista entidade){
         entidade.setNome(dto.getNome());
         entidade.setEmail(dto.getEmail());
         entidade.setCro(dto.getCro());
         entidade.setAtendeConvenio(dto.isAtendeConvenio());
-        entidade = dentistaRepository.save(entidade);
-        return new DentistaDto(entidade);
     }
 }

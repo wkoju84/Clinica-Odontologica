@@ -37,10 +37,7 @@ public class UsuarioService {
     @Transactional
     public UsuarioDto inserir(UsuarioDto dto){
         Usuario entidade = new Usuario();
-        entidade.setNome(dto.getNome());
-        entidade.setEmail(dto.getEmail());
-        entidade.setSenha(dto.getSenha());
-        entidade.setNivelAcesso(dto.getNivelAcesso());
+        copiarDtoParaEntidade(dto, entidade);
         entidade = usuarioRepository.save(entidade);
         return new UsuarioDto(entidade);
     }
@@ -48,11 +45,15 @@ public class UsuarioService {
     @Transactional
     public UsuarioDto atualizar(Integer id, UsuarioDto dto){
         Usuario entidade = usuarioRepository.getReferenceById(id);
+        copiarDtoParaEntidade(dto, entidade);
+        entidade = usuarioRepository.save(entidade);
+        return new UsuarioDto(entidade);
+    }
+
+    private void copiarDtoParaEntidade(UsuarioDto dto, Usuario entidade){
         entidade.setNome(dto.getNome());
         entidade.setEmail(dto.getEmail());
         entidade.setSenha(dto.getSenha());
         entidade.setNivelAcesso(dto.getNivelAcesso());
-        entidade = usuarioRepository.save(entidade);
-        return new UsuarioDto(entidade);
     }
 }
