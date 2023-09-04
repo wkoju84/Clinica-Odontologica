@@ -1,12 +1,18 @@
 package br.com.dh.clinica.services;
 
 import br.com.dh.clinica.dtos.EnderecoDto;
+import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.entities.Endereco;
 import br.com.dh.clinica.repositories.EnderecoRepository;
+import br.com.dh.clinica.services.exceptions.BancoDeDadosException;
+import br.com.dh.clinica.services.exceptions.EntidadeNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,12 +32,27 @@ public class EnderecoService {
     @Transactional(readOnly = true)
     public EnderecoDto buscarPorId(Integer id){
         Optional<Endereco> objeto = enderecoRepository.findById(id);
-        Endereco entidade = objeto.get();
+        //Endereco entidade = objeto.get();
+        Endereco entidade = objeto.orElseThrow(() -> new EntidadeNaoEncontradaException(
+                "Registro " + id + " não encontrado em sua base de dados!"
+        ));
         return new EnderecoDto(entidade);
     }
 
     public void excluir(Integer id){
-        enderecoRepository.deleteById(id);
+        try {
+            enderecoRepository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e){
+            throw new EntidadeNaoEncontradaException(
+                    "Exclusão impossível: Registro " + id + " não encontrado em sua base de dados!"
+            );
+        }
+        catch (DataIntegrityViolationException e){
+            throw new BancoDeDadosException(
+                    "Violação de integridade: Registro " + id + " está inserido em outro registro!"
+            );
+        }
     }
 
     @Transactional
@@ -44,10 +65,17 @@ public class EnderecoService {
 
     @Transactional
     public EnderecoDto atualizar(Integer id, EnderecoDto dto) {
-        Endereco entidade = enderecoRepository.getReferenceById(id);
-        copiarDtoParaEntidade(dto, entidade);
-        entidade = enderecoRepository.save(entidade);
-        return new EnderecoDto(entidade);
+        try {
+            Endereco entidade = enderecoRepository.getReferenceById(id);
+            copiarDtoParaEntidade(dto, entidade);
+            entidade = enderecoRepository.save(entidade);
+            return new EnderecoDto(entidade);
+        }
+        catch (EntityNotFoundException e){
+            throw new EntidadeNaoEncontradaException(
+                    "Registro " + id + " não encontrado em sua base de dados!"
+            );
+        }
     }
 
     private void copiarDtoParaEntidade(EnderecoDto dto, Endereco entidade){
