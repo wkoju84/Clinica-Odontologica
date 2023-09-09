@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,5 +61,19 @@ public class UsuarioRepositoryTests {
     public void buscarPorIdERetornarUmOptionalVazio(){
         Optional<Usuario> resultado = usuarioRepository.findById(idInexistente);
         Assertions.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void deleteDeveriaExcluirUmRegistroDoBD(){
+        usuarioRepository.deleteById(idExistente);
+        Optional<Usuario> resultado = usuarioRepository.findById(idExistente);
+        Assertions.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void deleteDeveriaNaoEncontrarORegistroNoBD(){
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            usuarioRepository.deleteById(idInexistente);
+        });
     }
 }
