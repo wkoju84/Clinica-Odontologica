@@ -2,8 +2,10 @@ package br.com.dh.clinica.tests;
 
 import br.com.dh.clinica.dtos.DentistaDto;
 import br.com.dh.clinica.dtos.EnderecoDto;
+import br.com.dh.clinica.dtos.UsuarioDto;
 import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.entities.Endereco;
+import br.com.dh.clinica.entities.Usuario;
 
 public class Factory {
 
@@ -26,5 +28,15 @@ public class Factory {
     public static EnderecoDto criarEnderecoDto(){
         Endereco endereco = criarEndereco();
         return new EnderecoDto(endereco);
+    }
+
+    public static Usuario criarUsuario(){
+        Usuario usuario = new Usuario(null, "Rogério Barbosa", "rogeriobarbosa@hotmail.com", "12345", 1);
+        return usuario;
+    }
+
+    public static UsuarioDto criarUsuarioDto(){
+        Usuario usuario = criarUsuario();
+        return new UsuarioDto(usuario);
     }
 }
