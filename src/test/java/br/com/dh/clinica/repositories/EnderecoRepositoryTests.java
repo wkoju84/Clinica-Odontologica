@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,5 +62,19 @@ public class EnderecoRepositoryTests {
     public void buscarPorIdERetornarUmOptionalVazio(){
         Optional<Endereco> resultado = enderecoRepository.findById(idInexistente);
         Assertions.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void deleteDeveriaExcluirUmRegistroDoBD(){
+        enderecoRepository.deleteById(idExistente);
+        Optional<Endereco> resultado = enderecoRepository.findById(idExistente);
+        Assertions.assertTrue(resultado.isEmpty());
+    }
+
+    @Test
+    public void deleteDeveriaNaoEncontrarORegistroNoBD(){
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
+            enderecoRepository.deleteById(idInexistente);
+        });
     }
 }
