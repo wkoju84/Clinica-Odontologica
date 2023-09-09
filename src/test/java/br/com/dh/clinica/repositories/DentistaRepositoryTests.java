@@ -1,6 +1,7 @@
 package br.com.dh.clinica.repositories;
 
 import br.com.dh.clinica.entities.Dentista;
+import br.com.dh.clinica.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,17 @@ public class DentistaRepositoryTests {
 
     @Test
     public void saveDeveriaSalvarComAutoincrementoQuandoOIdForNulo(){
-        Dentista dentista
+        Dentista dentista = Factory.criarDentista();//Simula um DTO
+        dentista = dentistaRepository.save(dentista);
+
+        Assertions.assertNotNull(dentista.getId());
+        Assertions.assertEquals(countTotalDentistas + 1, dentista.getId());
+    }
+
+    @Test
+    public void findAllDeveriaRetornarUmaLista(){
+        dentistaList = dentistaRepository.findAll();
+        Assertions.assertNotNull(dentistaList);
     }
 
     @Test
