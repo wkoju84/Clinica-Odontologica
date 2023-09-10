@@ -3,6 +3,7 @@ package br.com.dh.clinica.services;
 import br.com.dh.clinica.dtos.DentistaDto;
 import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.repositories.DentistaRepository;
+import br.com.dh.clinica.services.exceptions.BancoDeDadosException;
 import br.com.dh.clinica.services.exceptions.EntidadeNaoEncontradaException;
 import br.com.dh.clinica.tests.Factory;
 import org.junit.jupiter.api.Assertions;
@@ -124,6 +125,13 @@ public class DentistaServiceTests {
     public void deleteDeveriaLancarExcecao(){
         Assertions.assertThrows(EntidadeNaoEncontradaException.class, () -> service.excluir(idInexistente));
         Mockito.verify(repository, Mockito.times(1)).deleteById(idInexistente);
+    }
+
+    // Teste do método delete com exceção de integridade do BD
+    @Test
+    public void deleteDeveriaLancarExcecaoDeIntegridadeDeBD(){
+        Assertions.assertThrows(BancoDeDadosException.class, () -> service.excluir(idDependente));
+        Mockito.verify(repository, Mockito.times(1)).deleteById(idDependente);
     }
 
 
