@@ -90,5 +90,12 @@ public class DentistaServiceTests {
         });
     }
 
+    // Teste do método save
+    @Test
+    public void saveDeveriaPersistirNoBD(){
+        DentistaDto resultado = service.inserir(dto);
+        Assertions.assertNotNull(resultado);
+    }
+
 
 }
