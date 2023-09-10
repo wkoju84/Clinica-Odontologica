@@ -82,5 +82,13 @@ public class DentistaServiceTests {
         Assertions.assertNotNull(resultado);
     }
 
+    // Teste do método findById retornando uma Exceção
+    @Test
+    public void findByIdDeveriaRetornarUmaExcecao(){
+        Assertions.assertThrows(EntidadeNaoEncontradaException.class, () -> {
+            service.buscarPorId(idInexistente);
+        });
+    }
+
 
 }
