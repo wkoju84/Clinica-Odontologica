@@ -119,5 +119,12 @@ public class DentistaServiceTests {
         Mockito.verify(repository, Mockito.times(1)).deleteById(idExistente);
     }
 
+    // Teste do método delete com exceção de recurso não encontrado
+    @Test
+    public void deleteDeveriaLancarExcecao(){
+        Assertions.assertThrows(EntidadeNaoEncontradaException.class, () -> service.excluir(idInexistente));
+        Mockito.verify(repository, Mockito.times(1)).deleteById(idInexistente);
+    }
+
 
 }
