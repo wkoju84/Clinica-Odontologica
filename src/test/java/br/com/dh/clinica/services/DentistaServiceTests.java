@@ -75,5 +75,12 @@ public class DentistaServiceTests {
         Assertions.assertNotNull(resultado);
     }
 
+    //Teste do método findById
+    @Test
+    public void findByIdDeveriaRetornarUmRegistroDoBD(){
+        DentistaDto resultado = service.buscarPorId(idExistente);
+        Assertions.assertNotNull(resultado);
+    }
+
 
 }
