@@ -97,5 +97,12 @@ public class DentistaServiceTests {
         Assertions.assertNotNull(resultado);
     }
 
+    // Teste do método update
+    @Test
+    public void updateDeveriaAtualizarUmRegistro(){
+        DentistaDto resultado = service.atualizar(idExistente, dto);
+        Assertions.assertNotNull(resultado);
+    }
+
 
 }
