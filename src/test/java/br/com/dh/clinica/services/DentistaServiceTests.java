@@ -112,5 +112,12 @@ public class DentistaServiceTests {
         });
     }
 
+    // Teste do método delete
+    @Test
+    public void deleteDeveriaExcluirUmRegistro(){
+        Assertions.assertDoesNotThrow(() -> service.excluir(idExistente));
+        Mockito.verify(repository, Mockito.times(1)).deleteById(idExistente);
+    }
+
 
 }
