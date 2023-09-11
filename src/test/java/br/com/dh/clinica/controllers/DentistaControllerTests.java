@@ -149,4 +149,12 @@ public class DentistaControllerTests {
         resultado.andExpect(status().isNoContent());
     }
 
+    // Teste do método delete com exceção de recurso não encontrado
+    @Test
+    public void deleteDeveriaRetornarUm404QuandoOIdNaoExistir() throws Exception{
+        ResultActions resultado = mockMvc.perform(delete("/dentistas/{id}", idInexistente)
+                .accept(MediaType.APPLICATION_JSON));
+        resultado.andExpect(status().isNotFound());
+    }
+
 }
