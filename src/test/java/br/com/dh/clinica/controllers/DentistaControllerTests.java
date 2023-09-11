@@ -57,6 +57,10 @@ public class DentistaControllerTests {
 
         //Mock do save
         when(service.inserir(any())).thenReturn(dto);
+
+        //Mock do update
+        when(service.atualizar(eq(idExistente), any())).thenReturn(dto);
+        when(service.atualizar(eq(idInexistente), any())).thenThrow(EntidadeNaoEncontradaException.class);
     }
 
     // Teste do método findAll
@@ -95,6 +99,21 @@ public class DentistaControllerTests {
                 .accept(MediaType.APPLICATION_JSON));
 
         resultado.andExpect(status().isCreated());
+        resultado.andExpect(jsonPath("$.id").exists());
+        resultado.andExpect(jsonPath("$.nome").exists());
+    }
+
+    // Teste do método update
+    @Test
+    public void updateDeveriaRetornarUm200QuandoOIdExistir() throws Exception{
+        String jsonBody = objectMapper.writeValueAsString(dto);
+
+        ResultActions resultado = mockMvc.perform(put("/dentistas/{id}", idExistente)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        resultado.andExpect(status().isOk());
         resultado.andExpect(jsonPath("$.id").exists());
         resultado.andExpect(jsonPath("$.nome").exists());
     }
