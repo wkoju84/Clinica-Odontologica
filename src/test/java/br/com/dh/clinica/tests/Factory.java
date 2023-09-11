@@ -39,4 +39,9 @@ public class Factory {
         Usuario usuario = criarUsuario();
         return new UsuarioDto(usuario);
     }
+
+//    public static Paciente criarPaciente(){
+//        Paciente paciente = new Paciente(null, "Róger Guedes", "roguedes@hotmail.com", "123456789-01", 20230101);
+//        return paciente;
+//    }
 }
