@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import br.com.dh.clinica.dtos.DentistaDto;
 import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.services.DentistaService;
+import br.com.dh.clinica.services.exceptions.EntidadeNaoEncontradaException;
 import br.com.dh.clinica.tests.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,12 +50,23 @@ public class DentistaControllerTests {
 
         // Mock do findAll
         when(service.buscarTodos()).thenReturn(list);
+
+        //Mock do findById
+        when(service.buscarPorId(idExistente)).thenReturn(dto);
+        when(service.buscarPorId(idInexistente)).thenThrow(EntidadeNaoEncontradaException.class);
     }
 
     // Teste do método findAll
     @Test
     public void findAllDeveriaRetornarUmaLista() throws Exception {
         ResultActions resultado = mockMvc.perform(get("/dentistas").accept(MediaType.APPLICATION_JSON));
+        resultado.andExpect(status().isOk());
+    }
+
+    // Teste do método findById
+    @Test
+    public void findByIdDeveriaRetornarUmDto() throws Exception{
+        ResultActions resultado = mockMvc.perform(get("/dentistas/{id}", idExistente).accept(MediaType.APPLICATION_JSON));
         resultado.andExpect(status().isOk());
     }
 
