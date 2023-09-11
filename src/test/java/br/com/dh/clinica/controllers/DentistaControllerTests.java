@@ -118,4 +118,17 @@ public class DentistaControllerTests {
         resultado.andExpect(jsonPath("$.nome").exists());
     }
 
+    // Teste do método update com exceção
+    @Test
+    public void updateDeveriaRetornarUm404QuandoOIdNaoExistir() throws Exception{
+        String jsonBody = objectMapper.writeValueAsString(dto);
+
+        ResultActions resultado = mockMvc.perform(put("/dentistas/{id}", idInexistente)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        resultado.andExpect(status().isNotFound());
+    }
+
 }
