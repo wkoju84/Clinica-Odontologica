@@ -5,14 +5,14 @@ import br.com.dh.clinica.dtos.EnderecoDto;
 import br.com.dh.clinica.dtos.UsuarioDto;
 import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.entities.Endereco;
+import br.com.dh.clinica.entities.Paciente;
 import br.com.dh.clinica.entities.Usuario;
 
 public class Factory {
 
     public static Dentista criarDentista(){
 
-        Dentista dentista = new Dentista(null, "Sofia Santos", "sofsantos@gmail.com", 56874, true);
-        return dentista;
+        return new Dentista(null, "Sofia Santos", "sofsantos@gmail.com", 56874, true);
     }
 
     public static DentistaDto criarDentistaDto(){
@@ -21,8 +21,7 @@ public class Factory {
     }
 
     public static Endereco criarEndereco(){
-        Endereco endereco = new Endereco(null, "Rua das Camélias", "110", "Bairro Novo", "SP", "07781-471", "SP");
-        return endereco;
+        return new Endereco(null, "Rua das Camélias", "110", "Bairro Novo", "SP", "07781-471", "SP");
     }
 
     public static EnderecoDto criarEnderecoDto(){
@@ -31,8 +30,7 @@ public class Factory {
     }
 
     public static Usuario criarUsuario(){
-        Usuario usuario = new Usuario(null, "Rogério Barbosa", "rogeriobarbosa@hotmail.com", "12345", 1);
-        return usuario;
+        return new Usuario(null, "Rogério Barbosa", "rogeriobarbosa@hotmail.com", "12345", 1);
     }
 
     public static UsuarioDto criarUsuarioDto(){
@@ -41,7 +39,7 @@ public class Factory {
     }
 
 //    public static Paciente criarPaciente(){
-//        Paciente paciente = new Paciente(null, "Róger Guedes", "roguedes@hotmail.com", "123456789-01", 20230101);
+//        Paciente paciente = new Paciente(null, "Eder Jofre", "ederjo@ig.com", "123456789-05", 2021-01-01);
 //        return paciente;
 //    }
 }
