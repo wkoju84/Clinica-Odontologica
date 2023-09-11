@@ -12,7 +12,7 @@ public class Factory {
 
     public static Dentista criarDentista(){
 
-        return new Dentista(null, "Sofia Santos", "sofsantos@gmail.com", 56874, true);
+        return new Dentista(1, "Sofia Santos", "sofsantos@gmail.com", 56874, true);
     }
 
     public static DentistaDto criarDentistaDto(){

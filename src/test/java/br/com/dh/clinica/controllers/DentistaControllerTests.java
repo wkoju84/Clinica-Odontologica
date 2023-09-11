@@ -66,8 +66,19 @@ public class DentistaControllerTests {
     // Teste do método findById
     @Test
     public void findByIdDeveriaRetornarUmDto() throws Exception{
-        ResultActions resultado = mockMvc.perform(get("/dentistas/{id}", idExistente).accept(MediaType.APPLICATION_JSON));
+        ResultActions resultado = mockMvc.perform(get("/dentistas/{id}", idExistente)
+                .accept(MediaType.APPLICATION_JSON));
         resultado.andExpect(status().isOk());
+        resultado.andExpect(jsonPath("$.id").exists());
+        resultado.andExpect(jsonPath("$.nome").exists());
+    }
+
+    // Teste do método findById retornando uma Exceção
+    @Test
+    public void findByIdDeveriaRetornarUm404() throws Exception{
+        ResultActions resultado = mockMvc.perform(get("/dentistas/{id}", idInexistente)
+                .accept(MediaType.APPLICATION_JSON));
+        resultado.andExpect(status().isNotFound());
     }
 
 }
