@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import br.com.dh.clinica.dtos.DentistaDto;
 import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.services.DentistaService;
+import br.com.dh.clinica.services.exceptions.BancoDeDadosException;
 import br.com.dh.clinica.services.exceptions.EntidadeNaoEncontradaException;
 import br.com.dh.clinica.tests.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,6 +62,15 @@ public class DentistaControllerTests {
         //Mock do update
         when(service.atualizar(eq(idExistente), any())).thenReturn(dto);
         when(service.atualizar(eq(idInexistente), any())).thenThrow(EntidadeNaoEncontradaException.class);
+
+        //Mock do delete
+        doNothing().when(service).excluir(idExistente);
+
+        //Mock do delete com Exception de entidade não encontrada
+        doThrow(EntidadeNaoEncontradaException.class).when(service).excluir(idInexistente);
+
+        //Mock do delete com Exception de violação de integridade
+        doThrow(BancoDeDadosException.class).when(service).excluir(idDependente);
     }
 
     // Teste do método findAll
@@ -129,6 +139,14 @@ public class DentistaControllerTests {
                 .accept(MediaType.APPLICATION_JSON));
 
         resultado.andExpect(status().isNotFound());
+    }
+
+    // Teste do método delete
+    @Test
+    public void deleteDeveriaRetornarUm204QuandoOIdExistir() throws Exception{
+        ResultActions resultado = mockMvc.perform(delete("/dentistas/{id}", idExistente)
+                .accept(MediaType.APPLICATION_JSON));
+        resultado.andExpect(status().isNoContent());
     }
 
 }
