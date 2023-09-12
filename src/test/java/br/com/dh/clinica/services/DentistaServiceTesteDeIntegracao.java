@@ -66,4 +66,11 @@ public class DentistaServiceTesteDeIntegracao {
       dto1 = service.inserir(dto1);
       Assertions.assertNotNull(dto1.getId());
     }
+
+    // Teste do método update
+    @Test
+    public void updateDeveriaAtualizarUmRegistro(){
+        DentistaDto resultado = service.atualizar(idExistente, dto);
+        Assertions.assertNotNull(resultado);
+    }
 }
