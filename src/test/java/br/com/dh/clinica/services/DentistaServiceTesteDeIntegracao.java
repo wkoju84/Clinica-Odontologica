@@ -81,4 +81,12 @@ public class DentistaServiceTesteDeIntegracao {
             service.atualizar(idInexistente, dto);
         });
     }
+
+    // Teste do método delete
+    @Test
+    public void deleteDeveriaExcluirUmRegistro(){
+        Assertions.assertDoesNotThrow(() -> {
+            service.excluir(idExistente);
+        });
+    }
 }
