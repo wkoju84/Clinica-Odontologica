@@ -89,4 +89,12 @@ public class DentistaServiceTesteDeIntegracao {
             service.excluir(idExistente);
         });
     }
+
+    // Teste do método delete com exceção de recurso não encontrado
+    @Test
+    public void deleteDeveriaLancarUmaExcecao(){
+        Assertions.assertThrows(EntidadeNaoEncontradaException.class, () -> {
+            service.excluir(idInexistente);
+        });
+    }
 }
