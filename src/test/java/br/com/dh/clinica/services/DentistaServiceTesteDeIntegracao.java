@@ -41,4 +41,11 @@ public class DentistaServiceTesteDeIntegracao {
         List<DentistaDto> resultado = service.buscarTodos();
         Assertions.assertFalse(resultado.isEmpty());
     }
+
+    // Teste do método findById
+    @Test
+    public void findByIdDeveriaTrazerUmRegistro(){
+        DentistaDto resultado = service.buscarPorId(idExistente);
+        Assertions.assertNotNull(resultado);
+    }
 }
