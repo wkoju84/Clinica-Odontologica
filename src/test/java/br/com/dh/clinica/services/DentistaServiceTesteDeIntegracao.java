@@ -73,4 +73,12 @@ public class DentistaServiceTesteDeIntegracao {
         DentistaDto resultado = service.atualizar(idExistente, dto);
         Assertions.assertNotNull(resultado);
     }
+
+    // Teste do método update com exceção
+    @Test
+    public void updateDeveriaLancarUmaExcecao(){
+        Assertions.assertThrows(EntidadeNaoEncontradaException.class, () -> {
+            service.atualizar(idInexistente, dto);
+        });
+    }
 }
