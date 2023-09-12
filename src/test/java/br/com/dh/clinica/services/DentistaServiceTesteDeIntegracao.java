@@ -3,6 +3,7 @@ package br.com.dh.clinica.services;
 import br.com.dh.clinica.dtos.DentistaDto;
 import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.repositories.DentistaRepository;
+import br.com.dh.clinica.services.exceptions.EntidadeNaoEncontradaException;
 import br.com.dh.clinica.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,5 +48,13 @@ public class DentistaServiceTesteDeIntegracao {
     public void findByIdDeveriaTrazerUmRegistro(){
         DentistaDto resultado = service.buscarPorId(idExistente);
         Assertions.assertNotNull(resultado);
+    }
+
+    // Teste do método findById retornando uma Exceção
+    @Test
+    public void findByIdDeveriaLancarUmaExcecao(){
+        Assertions.assertThrows(EntidadeNaoEncontradaException.class, () -> {
+            service.buscarPorId(idInexistente);
+        });
     }
 }
