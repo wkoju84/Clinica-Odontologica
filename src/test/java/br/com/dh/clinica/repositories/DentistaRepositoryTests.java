@@ -38,6 +38,7 @@ public class DentistaRepositoryTests {
     @Test
     public void saveDeveriaSalvarComAutoincrementoQuandoOIdForNulo(){
         Dentista dentista = Factory.criarDentista();//Simula um DTO
+        dentista.setId(null);
         dentista = dentistaRepository.save(dentista);
 
         Assertions.assertNotNull(dentista.getId());

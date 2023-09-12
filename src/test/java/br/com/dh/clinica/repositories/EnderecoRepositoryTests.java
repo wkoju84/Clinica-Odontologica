@@ -40,6 +40,7 @@ public class EnderecoRepositoryTests {
     @Test
     public void saveDeveriaSalvarComAutoincrementoQuandoOIdForNulo(){
         Endereco endereco = Factory.criarEndereco();//Simula um DTO
+        endereco.setId(null);
         endereco = enderecoRepository.save(endereco);
 
         Assertions.assertNotNull(endereco.getId());

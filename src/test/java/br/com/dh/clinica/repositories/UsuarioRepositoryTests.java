@@ -39,6 +39,7 @@ public class UsuarioRepositoryTests {
     @Test
     public void saveDeveriaSalvarComAutoincrementoQuandoOIdForNulo(){
         Usuario usuario = Factory.criarUsuario();//Simula um DTO
+        usuario.setId(null);
         usuario = usuarioRepository.save(usuario);
 
         Assertions.assertNotNull(usuario.getId());
