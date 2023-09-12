@@ -57,4 +57,13 @@ public class DentistaServiceTesteDeIntegracao {
             service.buscarPorId(idInexistente);
         });
     }
+
+    // Teste do método save
+    @Test
+    public void saveDeveriaPersistirNoBancoDeDados(){
+      DentistaDto dto1 = dto;
+      dto1.setId(null);
+      dto1 = service.inserir(dto1);
+      Assertions.assertNotNull(dto1.getId());
+    }
 }
