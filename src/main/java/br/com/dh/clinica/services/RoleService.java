@@ -53,4 +53,12 @@ public class RoleService {
             );
         }
     }
+
+    @Transactional
+    public RoleDto inserir(RoleDto dto) {
+        Role entidade = new Role();
+        entidade.setAutoridade(dto.getAutoridade());
+        entidade = repository.save(entidade);
+        return new RoleDto(entidade);
+    }
 }
