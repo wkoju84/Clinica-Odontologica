@@ -4,6 +4,8 @@ import br.com.dh.clinica.entities.Usuario;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UsuarioDto implements Serializable {
 
@@ -11,28 +13,28 @@ public class UsuarioDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private String nome;
+    private String primeroNome;
+    private String ultimoNome;
     private String email;
-    private String senha;
-    private Integer nivelAcesso;
+
+    Set<RoleDto> roles = new HashSet<>();
 
     public UsuarioDto() {
     }
 
-    public UsuarioDto(Integer id, String nome, String email, String senha, Integer nivelAcesso) {
+    public UsuarioDto(Integer id, String primeroNome, String ultimoNome, String email) {
         this.id = id;
-        this.nome = nome;
+        this.primeroNome = primeroNome;
+        this.ultimoNome = ultimoNome;
         this.email = email;
-        this.senha = senha;
-        this.nivelAcesso = nivelAcesso;
     }
 
-    public UsuarioDto(Usuario usuario) {
-        this.id = usuario.getId();
-        this.nome = usuario.getNome();
-        this.email = usuario.getEmail();
-        this.senha = usuario.getSenha();
-        this.nivelAcesso = usuario.getNivelAcesso();
+    public UsuarioDto(Usuario entidade) {
+        id = entidade.getId();
+        primeroNome = entidade.getPrimeroNome();
+        ultimoNome = entidade.getUltimoNome();
+        email = entidade.getEmail();
+        entidade.getRoles().forEach(x -> this.roles.add(new RoleDto(x)));
     }
 
     public Integer getId() {
@@ -43,12 +45,20 @@ public class UsuarioDto implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getPrimeroNome() {
+        return primeroNome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setPrimeroNome(String primeroNome) {
+        this.primeroNome = primeroNome;
+    }
+
+    public String getUltimoNome() {
+        return ultimoNome;
+    }
+
+    public void setUltimoNome(String ultimoNome) {
+        this.ultimoNome = ultimoNome;
     }
 
     public String getEmail() {
@@ -59,19 +69,7 @@ public class UsuarioDto implements Serializable {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public Integer getNivelAcesso() {
-        return nivelAcesso;
-    }
-
-    public void setNivelAcesso(Integer nivelAcesso) {
-        this.nivelAcesso = nivelAcesso;
+    public Set<RoleDto> getRoles() {
+        return roles;
     }
 }

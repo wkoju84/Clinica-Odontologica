@@ -1,14 +1,16 @@
 package br.com.dh.clinica.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-public class Usuario implements Serializable {
+@Table(name = "usuario")
+public class Usuario implements  Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -16,22 +18,26 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private String nome;
+    private String primeroNome;
+    private String ultimoNome;
     private String email;
-    private String senha;
+    private String senha;//Será criptografada
 
-    private Integer nivelAcesso;
+    @ManyToMany(fetch = FetchType.EAGER)//Força a busca dos perfis de usuário
+    @JoinTable(name = "usuario_role",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nome, String email, String senha, Integer nivelAcesso) {
+    public Usuario(Integer id, String primeroNome, String ultimoNome, String email, String senha) {
         this.id = id;
-        this.nome = nome;
+        this.primeroNome = primeroNome;
+        this.ultimoNome = ultimoNome;
         this.email = email;
         this.senha = senha;
-        this.nivelAcesso = nivelAcesso;
     }
 
     public Integer getId() {
@@ -42,12 +48,20 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getPrimeroNome() {
+        return primeroNome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setPrimeroNome(String primeroNome) {
+        this.primeroNome = primeroNome;
+    }
+
+    public String getUltimoNome() {
+        return ultimoNome;
+    }
+
+    public void setUltimoNome(String ultimoNome) {
+        this.ultimoNome = ultimoNome;
     }
 
     public String getEmail() {
@@ -66,11 +80,7 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public Integer getNivelAcesso() {
-        return nivelAcesso;
-    }
-
-    public void setNivelAcesso(Integer nivelAcesso) {
-        this.nivelAcesso = nivelAcesso;
+    public Set<Role> getRoles() {
+        return roles;
     }
 }

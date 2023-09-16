@@ -3,6 +3,7 @@ package br.com.dh.clinica.services;
 import br.com.dh.clinica.dtos.DentistaDto;
 import br.com.dh.clinica.entities.Dentista;
 import br.com.dh.clinica.repositories.DentistaRepository;
+import br.com.dh.clinica.services.exceptions.BancoDeDadosException;
 import br.com.dh.clinica.services.exceptions.EntidadeNaoEncontradaException;
 import br.com.dh.clinica.tests.Factory;
 import org.junit.jupiter.api.Assertions;
@@ -26,13 +27,14 @@ public class DentistaServiceTesteDeIntegracao {
 
     private Integer idExistente;
     private Integer idInexistente;
-
+    private Integer idDependente;
     private DentistaDto dto;
 
     @BeforeEach
     void setup() throws Exception{
         idExistente = 1;
         idInexistente = 999;
+        idDependente = 3;
         dto = Factory.criarDentistaDto();
     }
 
@@ -97,4 +99,12 @@ public class DentistaServiceTesteDeIntegracao {
             service.excluir(idInexistente);
         });
     }
+
+    // Teste do método delete com exceção de integridade do BD
+//    @Test
+//    public void deleteDeveriaLancarUmaViolacaoDeIntegridade(){
+//        Assertions.assertThrows(BancoDeDadosException.class, () -> {
+//            service.excluir(idDependente);
+//        });
+//    }
 }

@@ -1,11 +1,10 @@
 package br.com.dh.clinica.repositories;
 
-import br.com.dh.clinica.entities.Usuario;
+import br.com.dh.clinica.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-    Usuario buscarPorEmail(String email);
 }
