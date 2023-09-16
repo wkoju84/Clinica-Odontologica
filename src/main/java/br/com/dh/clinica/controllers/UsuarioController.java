@@ -1,6 +1,8 @@
 package br.com.dh.clinica.controllers;
 
+import br.com.dh.clinica.dtos.UsuarioAtualizarDto;
 import br.com.dh.clinica.dtos.UsuarioDto;
+import br.com.dh.clinica.dtos.UsuarioInserirDto;
 import br.com.dh.clinica.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,17 +38,17 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> inserirUsuario(@RequestBody UsuarioDto dto){
-        dto = usuarioService.inserir(dto);
+    public ResponseEntity<UsuarioDto> inserirUsuario(@RequestBody UsuarioInserirDto dto){
+        UsuarioDto novoDto = usuarioService.inserir(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
+                .buildAndExpand(novoDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(novoDto);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<UsuarioDto> atualizarUsuario(@PathVariable Integer id,
-                                                       @RequestBody UsuarioDto dto){
-        dto = usuarioService.atualizar(id, dto);
-        return ResponseEntity.ok().body(dto);
+                                                       @RequestBody UsuarioAtualizarDto dto){
+        UsuarioDto novoDto = usuarioService.atualizar(id, dto);
+        return ResponseEntity.ok().body(novoDto);
     }
 }
