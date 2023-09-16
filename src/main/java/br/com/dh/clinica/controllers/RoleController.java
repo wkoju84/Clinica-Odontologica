@@ -4,10 +4,7 @@ import br.com.dh.clinica.dtos.RoleDto;
 import br.com.dh.clinica.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,11 @@ public class RoleController {
     public ResponseEntity<RoleDto> buscarRolePorId(@PathVariable Integer id){
         RoleDto dto = service.buscarPorId(id);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> excluirRole(@PathVariable Integer id){
+        service.excluir(id);
+        return ResponseEntity.noContent().build();
     }
 }
