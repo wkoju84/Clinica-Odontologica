@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,5 +61,20 @@ public class RoleService {
         entidade.setAutoridade(dto.getAutoridade());
         entidade = repository.save(entidade);
         return new RoleDto(entidade);
+    }
+
+    @Transactional
+    public RoleDto atualizar(Integer id, RoleDto dto){
+        try {
+            Role entidade = repository.getReferenceById(id);
+            entidade.setAutoridade(dto.getAutoridade());
+            entidade = repository.save(entidade);
+            return new RoleDto(entidade);
+        }
+        catch (EntityNotFoundException e){
+            throw new EntidadeNaoEncontradaException(
+                    "Registro " + id + " não encontrado em sua base de dados!"
+            );
+        }
     }
 }

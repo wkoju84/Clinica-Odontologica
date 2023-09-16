@@ -42,4 +42,11 @@ public class RoleController {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<RoleDto> atualizarRole(@PathVariable Integer id,
+                                                 @RequestBody RoleDto dto){
+        dto = service.atualizar(id, dto);
+        return ResponseEntity.ok().body(dto);
+    }
 }
