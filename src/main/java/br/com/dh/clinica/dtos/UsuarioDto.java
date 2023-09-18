@@ -2,6 +2,7 @@ package br.com.dh.clinica.dtos;
 
 import br.com.dh.clinica.entities.Usuario;
 
+import javax.persistence.Column;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
