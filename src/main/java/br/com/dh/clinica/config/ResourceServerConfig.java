@@ -23,25 +23,29 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private JwtTokenStore tokenStore;
 
     private static final String[] PUBLIC = { "/oauth/token", "/h2/**" };
+
     private static final String[] OPERATOR_OR_ADMIN = { "/dentistas/**", "/enderecos/**", "/pacientes/**" };
+
     private static final String[] ADMIN = { "/users/**", "/roles/**" };
 
     @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception{
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenStore(tokenStore);
     }
 
-    @Override // configurações das rotas
-    public void configure(HttpSecurity httpSecurity) throws Exception{
+    // CONFIGURAÇÕES DAS ROTAS
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
 
-        if (Arrays.asList(environment.getActiveProfiles()).contains("test")){
-            httpSecurity.headers().frameOptions().disable();
+        if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
+            http.headers().frameOptions().disable();
         }
 
-        httpSecurity.authorizeRequests().antMatchers(PUBLIC).permitAll()
+        http.authorizeRequests().antMatchers(PUBLIC).permitAll()
                 .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
                 .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR", "ADMIN")
-                .antMatchers(ADMIN).hasAnyRole("ADMIN")
+                .antMatchers(ADMIN).hasRole("ADMIN")
                 .anyRequest().authenticated();
     }
+
 }

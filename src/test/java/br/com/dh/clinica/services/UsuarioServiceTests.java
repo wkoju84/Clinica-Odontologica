@@ -1,11 +1,5 @@
 package br.com.dh.clinica.services;
 
-import br.com.dh.clinica.dtos.DentistaDto;
-import br.com.dh.clinica.dtos.UsuarioDto;
-import br.com.dh.clinica.entities.Dentista;
-import br.com.dh.clinica.entities.Usuario;
-import br.com.dh.clinica.repositories.DentistaRepository;
-import br.com.dh.clinica.repositories.UsuarioRepository;
 import br.com.dh.clinica.services.exceptions.BancoDeDadosException;
 import br.com.dh.clinica.services.exceptions.EntidadeNaoEncontradaException;
 import br.com.dh.clinica.tests.Factory;
@@ -97,14 +91,14 @@ public class UsuarioServiceTests {
     // Teste do método save
     @Test
     public void saveDeveriaPersistirNoBD(){
-        UsuarioDto resultado = service.inserir(dto);
+        UsuarioDto resultado = service.inserir((UsuarioInserirDto) dto);
         Assertions.assertNotNull(resultado);
     }
 
     // Teste do método update
     @Test
     public void updateDeveriaAtualizarUmRegistro(){
-        UsuarioDto resultado = service.atualizar(idExistente, dto);
+        UsuarioDto resultado = service.atualizar(idExistente, (UsuarioAtualizarDto) dto);
         Assertions.assertNotNull(resultado);
     }
 
@@ -112,7 +106,7 @@ public class UsuarioServiceTests {
     @Test
     public void updateDeveriaLancarUmaExcecao(){
         Assertions.assertThrows(EntidadeNaoEncontradaException.class, () -> {
-            service.atualizar(idInexistente, dto);
+            service.atualizar(idInexistente, (UsuarioAtualizarDto) dto);
         });
     }
 

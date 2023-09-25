@@ -1,6 +1,5 @@
 package br.com.dh.clinica.controllers;
 
-import br.com.dh.clinica.dtos.EnderecoDto;
 import br.com.dh.clinica.dtos.PacienteDto;
 import br.com.dh.clinica.services.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;

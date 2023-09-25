@@ -29,7 +29,7 @@ public class EnderecoDto implements Serializable {
         this.numero = numero;
         this.bairro = bairro;
         this.cidade = cidade;
-        this.cep = cidade;
+        this.cep = cep;
         this.estado = estado;
     }
 

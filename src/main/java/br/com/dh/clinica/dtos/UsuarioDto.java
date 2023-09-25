@@ -14,8 +14,8 @@ public class UsuarioDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private String primeroNome;
-    private String ultimoNome;
+    private String nome;
+    private String sobrenome;
     private String email;
 
     Set<RoleDto> roles = new HashSet<>();
@@ -23,17 +23,17 @@ public class UsuarioDto implements Serializable {
     public UsuarioDto() {
     }
 
-    public UsuarioDto(Integer id, String primeroNome, String ultimoNome, String email) {
+    public UsuarioDto(Integer id, String nome, String sobrenome, String email) {
         this.id = id;
-        this.primeroNome = primeroNome;
-        this.ultimoNome = ultimoNome;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
         this.email = email;
     }
 
     public UsuarioDto(Usuario entidade) {
         id = entidade.getId();
-        primeroNome = entidade.getPrimeroNome();
-        ultimoNome = entidade.getUltimoNome();
+        nome = entidade.getNome();
+        sobrenome = entidade.getSobrenome();
         email = entidade.getEmail();
         entidade.getRoles().forEach(x -> this.roles.add(new RoleDto(x)));
     }
@@ -46,20 +46,20 @@ public class UsuarioDto implements Serializable {
         this.id = id;
     }
 
-    public String getPrimeroNome() {
-        return primeroNome;
+    public String getNome() {
+        return nome;
     }
 
-    public void setPrimeroNome(String primeroNome) {
-        this.primeroNome = primeroNome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getUltimoNome() {
-        return ultimoNome;
+    public String getSobrenome() {
+        return sobrenome;
     }
 
-    public void setUltimoNome(String ultimoNome) {
-        this.ultimoNome = ultimoNome;
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
     public String getEmail() {

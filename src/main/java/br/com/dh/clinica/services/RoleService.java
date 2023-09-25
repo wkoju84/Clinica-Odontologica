@@ -10,7 +10,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -24,57 +23,49 @@ public class RoleService {
     private RoleRepository repository;
 
     @Transactional(readOnly = true)
-    public List<RoleDto> buscarTodos(){
+    public List<RoleDto> findAll() {
         List<Role> list = repository.findAll();
         return list.stream().map(RoleDto::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public RoleDto buscarPorId(Integer id){
-        Optional<Role> objeto = repository.findById(id);
-        Role entidade = objeto.orElseThrow(() -> new EntidadeNaoEncontradaException(
-                "Registro " + id + " não encontrado em sua base de dados!"
-        ));
-
-        return new RoleDto(entidade);
+    public RoleDto findById(Integer id) {
+        Optional<Role> object = repository.findById(id);
+        Role entity = object.orElseThrow(() ->
+                new EntidadeNaoEncontradaException("Este ID não existe em nosso sistema."));
+        return new RoleDto(entity);
     }
 
-    public void excluir(Integer id){
+    public void delete(Integer id) {
         try {
             repository.deleteById(id);
         }
-        catch (EmptyResultDataAccessException e){
-            throw new EntidadeNaoEncontradaException(
-                    "Exclusão impossível: Registro " + id + " não encontrado em sua base de dados!"
-            );
+        catch (EmptyResultDataAccessException e) {
+            throw new EntidadeNaoEncontradaException("Id não encontrado: " + id);
         }
-        catch (DataIntegrityViolationException e){
-            throw new BancoDeDadosException(
-                    "Violação de integridade: Registro " + id + " está inserido em outro registro!"
-            );
+        catch (DataIntegrityViolationException e) {
+            throw new BancoDeDadosException("Violação de integridade no banco de dados.");
         }
     }
 
     @Transactional
-    public RoleDto inserir(RoleDto dto) {
-        Role entidade = new Role();
-        entidade.setAutoridade(dto.getAutoridade());
-        entidade = repository.save(entidade);
-        return new RoleDto(entidade);
+    public RoleDto insert(RoleDto dto) {
+        Role entity = new Role();
+        entity.setAuthority(dto.getAuthority());
+        entity = repository.save(entity);
+        return new RoleDto(entity);
     }
 
     @Transactional
-    public RoleDto atualizar(Integer id, RoleDto dto){
+    public RoleDto update(Integer id, RoleDto dto) {
         try {
-            Role entidade = repository.getReferenceById(id);
-            entidade.setAutoridade(dto.getAutoridade());
-            entidade = repository.save(entidade);
-            return new RoleDto(entidade);
+            Role entity = repository.getReferenceById(id);
+            entity.setAuthority(dto.getAuthority());
+            entity = repository.save(entity);
+            return new RoleDto(entity);
         }
-        catch (EntityNotFoundException e){
-            throw new EntidadeNaoEncontradaException(
-                    "Registro " + id + " não encontrado em sua base de dados!"
-            );
+        catch (EntityNotFoundException e) {
+            throw new EntidadeNaoEncontradaException("Id não encontrado: " + id);
         }
     }
 }

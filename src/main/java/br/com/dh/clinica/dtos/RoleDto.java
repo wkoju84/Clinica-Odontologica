@@ -2,26 +2,25 @@ package br.com.dh.clinica.dtos;
 
 import br.com.dh.clinica.entities.Role;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 public class RoleDto implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
-    private Integer id;
-    private String autoridade;
+
+    public Integer id;
+    public String authority;
 
     public RoleDto() {
     }
 
-    public RoleDto(Integer id, String autoridade) {
+    public RoleDto(Integer id, String authority) {
         this.id = id;
-        this.autoridade = autoridade;
+        this.authority = authority;
     }
 
-    public RoleDto(Role entidade) {
-        this.id = entidade.getId();
-        this.autoridade = entidade.getAutoridade();
+    public RoleDto(Role entity) {
+        this.id = entity.getId();
+        this.authority = entity.getAuthority();
     }
 
     public Integer getId() {
@@ -32,11 +31,11 @@ public class RoleDto implements Serializable {
         this.id = id;
     }
 
-    public String getAutoridade() {
-        return autoridade;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setAutoridade(String autoridade) {
-        this.autoridade = autoridade;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }

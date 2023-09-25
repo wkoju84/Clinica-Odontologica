@@ -2,6 +2,7 @@ package br.com.dh.clinica.config;
 
 import br.com.dh.clinica.components.JwtTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,8 +18,17 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import java.util.Arrays;
 
 @Configuration
-@EnableAuthorizationServer //Para utilizar o Oauth2
+@EnableAuthorizationServer // Para utilizar o OAUTH2
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+    @Value("${security.oauth2.client.client-id}")
+    private String clientId;
+
+    @Value("${security.oauth2.client.client-secret}")
+    private String clientSecret;
+
+    @Value("${jwt.duration}")
+    private Integer jwtDuration;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -36,22 +46,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private JwtTokenEnhancer tokenEnhancer;
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception{
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
     @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception{
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("dhclinica")
-                .secret(passwordEncoder.encode("dh2023"))
+                .withClient(clientId)
+                .secret(passwordEncoder.encode(clientSecret))
                 .scopes("read", "write")
-                .authorizedGrantTypes("senha")
-                .accessTokenValiditySeconds(1800); //60 * 30 = 30 minutos
+                .authorizedGrantTypes("password")
+                .accessTokenValiditySeconds(jwtDuration); // 60 * 60 = 3600 segundos
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception{
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 
         TokenEnhancerChain chain = new TokenEnhancerChain();
         chain.setTokenEnhancers(Arrays.asList(accessTokenConverter, tokenEnhancer));
@@ -61,4 +71,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .accessTokenConverter(accessTokenConverter)
                 .tokenEnhancer(chain);
     }
+
 }

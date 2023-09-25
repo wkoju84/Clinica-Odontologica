@@ -5,7 +5,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,35 +12,33 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "usuario")
-public class Usuario implements UserDetails, Serializable {
-
-    @Serial
+@Table(name = "table_user")
+public class User implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private String sobrenome;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String senha;//Será criptografada
+    private String password; // Será criptografada
 
-    @ManyToMany(fetch = FetchType.EAGER)//Força a busca dos perfis de usuário
-    @JoinTable(name = "usuario_role",
-            joinColumns = @JoinColumn(name = "usuario_id"),
+    @ManyToMany(fetch = FetchType.EAGER) // Força a busca dos perfis do usuário
+    @JoinTable(name = "table_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public Usuario() {
+    public User() {
     }
 
-    public Usuario(Integer id, String nome, String sobrenome, String email, String senha) {
+    public User(Integer id, String firstName, String lastName, String email, String password) {
         this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.senha = senha;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -52,20 +49,20 @@ public class Usuario implements UserDetails, Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSobrenome() {
-        return sobrenome;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -76,12 +73,12 @@ public class Usuario implements UserDetails, Serializable {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Set<Role> getRoles() {
@@ -90,12 +87,8 @@ public class Usuario implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAutoridade())).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                .collect(Collectors.toList());
     }
 
     @Override

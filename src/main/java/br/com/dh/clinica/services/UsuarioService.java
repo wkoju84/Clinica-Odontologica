@@ -93,8 +93,8 @@ public class UsuarioService implements UserDetailsService {
     }
 
     private void copiarDtoParaEntidade(UsuarioDto dto, Usuario entidade){
-        entidade.setPrimeroNome(dto.getPrimeroNome());
-        entidade.setUltimoNome(dto.getUltimoNome());
+        entidade.setNome(dto.getNome());
+        entidade.setSobrenome(dto.getSobrenome());
         entidade.setEmail(dto.getEmail());
 
         entidade.getRoles().clear();
@@ -107,7 +107,7 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Usuario usuario = usuarioRepository.buscarPorEmail(username);
+        Usuario usuario = usuarioRepository.findByEmail(username);
         if (usuario == null) {
             throw new UsernameNotFoundException("Você digitou um e-mail inválido!");
         }

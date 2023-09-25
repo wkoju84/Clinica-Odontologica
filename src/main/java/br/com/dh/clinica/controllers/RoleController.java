@@ -11,42 +11,42 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping(value = "/roles")
 public class RoleController {
 
     @Autowired
     RoleService service;
 
     @GetMapping
-    public ResponseEntity<List<RoleDto>> buscarTodasAsRoles(){
-        List<RoleDto> list = service.buscarTodos();
+    public ResponseEntity<List<RoleDto>> buscarTodos() {
+        List<RoleDto> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<RoleDto> buscarRolePorId(@PathVariable Integer id){
-        RoleDto dto = service.buscarPorId(id);
+    public ResponseEntity<RoleDto> buscarPorId(@PathVariable Integer id) {
+        RoleDto dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> excluirRole(@PathVariable Integer id){
-        service.excluir(id);
+    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
-    public ResponseEntity<RoleDto> inserirRole(@RequestBody RoleDto dto){
-        dto = service.inserir(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+    public ResponseEntity<RoleDto> inserir(@RequestBody RoleDto dto) {
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<RoleDto> atualizarRole(@PathVariable Integer id,
-                                                 @RequestBody RoleDto dto){
-        dto = service.atualizar(id, dto);
+    public ResponseEntity<RoleDto> atualizar(@PathVariable Integer id, @RequestBody RoleDto dto) {
+        dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
 }
+

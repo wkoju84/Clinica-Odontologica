@@ -1,4 +1,16 @@
 -- AQUI TEMOS O SEEDING DE DADOS
+
+INSERT INTO table_role (authority) VALUES ('ROLE_OPERATOR');
+INSERT INTO table_role (authority) VALUES ('ROLE_ADMIN');
+
+INSERT INTO table_user (first_name, last_name, email, password) VALUES ('Lewis', 'Hamilton', 'hamilton@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+INSERT INTO table_user (first_name, last_name, email, password) VALUES ('Fernando', 'Alonso', 'alonso@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+--Senha 123456
+
+INSERT INTO table_user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO table_user_role (user_id, role_id) VALUES (2, 1);
+INSERT INTO table_user_role (user_id, role_id) VALUES (2, 2);
+
 INSERT INTO dentista (nome, email, cro, atende_convenio) VALUES ('Paola Santos', 'p.santos@gmail.com', 21456, TRUE);
 INSERT INTO dentista (nome, email, cro, atende_convenio) VALUES ('Monique Albuquerque', 'albuquerquedentista@gmail.com', 22563, FALSE);
 INSERT INTO dentista (nome, email, cro, atende_convenio) VALUES ('Octávio Martinez', 'octaviomtnz@gmail.com', 21541, TRUE);
@@ -18,6 +30,3 @@ INSERT INTO paciente_endereco (paciente_id, endereco_id) VALUES (2, 3);
 INSERT INTO paciente_endereco (paciente_id, endereco_id) VALUES (3, 2);
 INSERT INTO paciente_endereco (paciente_id, endereco_id) VALUES (3, 3);
 
-INSERT INTO usuario (nome, email, senha, nivel_acesso) VALUES ('Jaspion Giban', 'jaspion-giban@expo.com', '215487', 1);
-INSERT INTO usuario (nome, email, senha, nivel_acesso) VALUES ('Vegeta', 'vegeta.prince@expo.com', '412587', 2);
-INSERT INTO usuario (nome, email, senha, nivel_acesso) VALUES ('Kakaroto', 'kakaroto@expo.com', '325698', 3);

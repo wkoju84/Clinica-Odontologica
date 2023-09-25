@@ -23,7 +23,7 @@ public class Consulta implements Serializable {
 
     private Dentista dentista;
 
-    private Usuario usuario;
+    private User user;
 
 
 

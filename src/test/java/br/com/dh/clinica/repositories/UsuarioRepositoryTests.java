@@ -1,8 +1,5 @@
 package br.com.dh.clinica.repositories;
 
-import br.com.dh.clinica.entities.Dentista;
-import br.com.dh.clinica.entities.Endereco;
-import br.com.dh.clinica.entities.Usuario;
 import br.com.dh.clinica.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -21,19 +21,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Override //Configurar a criptografia e o UserDetailService
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+    @Override // Configurar a criptografia e o UserDetailsService
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
-    @Override // Liberar o uso do Actuator para o Oauth2
-    public void configure(WebSecurity webSecurity) throws Exception{
-        webSecurity.ignoring().antMatchers("/actuator/**");
+    @Override // Liberar o uso do actuador para o OAUTH 2
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/actuator/**");
     }
 
-    @Override // config do spring security
+    @Override // CONFIG DO SPRING SECURITY
     @Bean
-    protected AuthenticationManager authenticationManager() throws Exception{
+    protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
 }
